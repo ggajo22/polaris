@@ -19,6 +19,41 @@ mysqli_select_db($conn, "polaris2");
     }
     </style>
   </head>
+<?php
+    // 뿌릴 정보 가져오기 payment_date, payment_method_name, type, room_no, start_date, end_date, 숙박일수, guest_name, total_price, paid_price, platform_name, comment
+    // room, platfrom join 해서 가져오기
+    $result = mysqli_query($conn, "SELECT ri.res_info_id, type, room_no, guest_name, total_price, platform_name, comment FROM res_info as ri LEFT JOIN room as rm ON ri.room_id = rm.room_id LEFT JOIN platform as pf ON ri.platform_id = pf.platform_id");
+    $resData = array();
+    while($row = mysqli_fetch_assoc($result)){
+      // $row['res_info_id'] 가 유니크하게 무조건 1 개만 있다는 가정하에
+      $resData[$row['res_info_id']] = $row;
+    }
+    // payment 에서 가져오기
+    $result = mysqli_query($conn, "SELECT pm.res_info_id, payment_date, payment_method_name, paid_price FROM payment as pm LEFT JOIN res_info as ri ON pm.res_info_id = ri.res_info_id");
+    while($row = mysqli_fetch_assoc($result)){
+      if(isset($resData[$row['res_info_id']])){
+        // $resData[$row['res_info_id']] 가 위에서 선언이 돼 있어야만 한다.
+        // 즉 이미 불러온 res_info 데이터에만 추가해 줄 것.
+        if(!isset($resData[$row['res_info_id']]['payment'])){
+          $resData[$row['res_info_id']]['payment'] = array();
+        }
+        $resData[$row['res_info_id']]['payment'][] = $row;
+      }
+    }
+    // res 에서 가져오기 (날짜 관련)
+    $result = mysqli_query($conn, "SELECT * FROM res as r LEFT JOIN res_info as ri ON r.res_info_id = ri.res_info_id");
+    while($row = mysqli_fetch_assoc($result)){
+      if(isset($resData[$row['res_info_id']])){
+        if(!isset($resData[$row['res_info_id']]['res'])){
+          $resData[$row['res_info_id']]['res'] = array();
+        }
+        $resData[$row['res_info_id']]['res'][] = $row;
+      }
+    }
+
+?>
+
+
   <body>
     <!-- 네비 -->
     <div class="navbar navbar-fixed-top">
@@ -60,7 +95,7 @@ mysqli_select_db($conn, "polaris2");
       <!-- 테이블 시작 -->
     <table cellspacing="0" cellpadding="0" class="table table-hover">
       <thead>
-        <tr>
+        <tr id="reportTable">
           <th scope="col" style="min-width:90px">결제일</th>
           <th scope="col" style="min-width:60px">결제수단</th>
           <th scope="col" style="min-width:60px">방타입</th>
@@ -80,5 +115,15 @@ mysqli_select_db($conn, "polaris2");
       </tfoot>
     </table>
   </div> <!-- 패딩30 -->
+
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="./res/js/jquery-1.11.3.min.js"></script>
+  <script src="./res/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="./res/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+
+  </script>
   </body>
 </html>
