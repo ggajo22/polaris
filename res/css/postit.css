@@ -1,0 +1,197 @@
+/* 멤버리스트*/
+#postit-list{
+	width:300px;
+	padding-left:15px;
+	padding-right:15px;
+}
+@media (max-width:798px){
+	#postit-list{
+		width:100%;
+	}
+}
+#postit-list .memb-item{
+	cursor:pointer;
+	border-radius: 5px;
+	padding:2px;
+}
+#postit-list .memb-item.item-header{
+	background-color: #abc;
+}
+#postit-list .memb-item.item-special{
+	background-color: #5CB85C;
+}
+#postit-list .memb-item:hover{
+	background-color: #f0ad4e;
+    color: white;
+}
+#postit-list .memb-item.item-header:hover{
+	background-color: #48C74C;
+}
+/* 포스트박스 */
+#postit-postbox{
+	padding:15px;
+}
+/* 포스트 */
+.postbox .thumbnail .caption{
+	padding:3px;
+}
+.postbox .btn-edit{
+	cursor:pointer;
+	color:gray;
+}
+.postbox .btn-edit:hover{
+	color:red;
+}
+
+.postbox .showmore,
+.postbox span>.glyphicon{
+	top:3px;
+	padding-left: 3px;
+	padding-bottom:3px;
+}
+.postbox {
+	overflow-x:auto;
+}
+
+.postbox p{
+	font-size: 14px;
+	max-height:140px;
+	margin-bottom:0px;
+	overflow-y:auto;
+}
+
+.postbox p.posted-img{
+	max-height:150px;
+}
+.postbox .posted-img>img{
+	width:100%;
+}
+.postbox .posted-link .label{
+	height: 22px !important;
+    line-height: 18px !important;
+}
+
+
+.postbox .post-showmore{
+	clear:both;
+	text-align:center;
+	border-radius:5px;
+	cursor:pointer;
+	background: cadetblue;
+    color: white;
+	padding:10px;
+}
+.postbox .post-showmore:hover{
+	background-color:#f0ad4e;
+}
+.postbox .badge{
+	height:16px;
+	padding:2px 5px;
+	background-color:red;
+}
+
+.postbox .post-item{
+	margin-bottom:10px;
+}
+.postbox .post-item.status-trash{
+	text-decoration: line-through;
+	opacity:0.5;
+}
+@media (min-width:1170px){
+	.postbox .post-item:nth-of-type(5n+1){
+		clear:left;
+	}
+}
+@media (min-width:992px) and (max-width:1169px){
+	.postbox .post-item:nth-of-type(4n+1){
+		clear:left;
+	}
+}
+@media (min-width:768px) and (max-width:991px){
+	.postbox .post-item:nth-of-type(3n+1){
+		clear:left;
+	}
+}
+
+.postbox .thumbnail{
+	box-shadow:2px 2px 5px black;
+	background-color:#fcf9a8;
+	margin-bottom : 0;
+}
+.postbox .thumbnail.default{
+	background-color:#fcf9a8;
+}
+.postbox .thumbnail.primary{
+	background-color:#337ab7;
+	color:white;
+}
+.postbox .thumbnail.primary p{
+	color:white;
+}
+.postbox .thumbnail.success{
+	background-color:#5cb85c;
+}
+.postbox .thumbnail.info{
+	background-color:#5bc0de;
+}
+.postbox .thumbnail.danger{
+	background-color:#d9534f;
+	color:white;
+}
+.postbox .thumbnail.danger p{
+	color:white;
+}
+
+.postbox .thumbnail .postdate{
+	font-size:10px;
+	line-height:20px;
+}
+.postbox .posted-data .label{
+	margin-top:3px;
+}
+
+
+
+/* 포스트 쓰는 폼*/
+#postForm{
+	width:300px;
+}
+
+#postForm textarea{
+	height:100px;
+}
+#postForm .color-selector{
+	left:-2px;
+	width:50px;
+	min-width:10px;
+}
+#postForm .color-selector>li>a {
+	font-size:20px;
+    padding: 3px 14px;
+}
+#postForm .color-selector .default,
+#postForm .showdrop .default{
+	color:#fcf9a8;
+	background-color:black;
+}
+#postForm .color-selector .primary,
+#postForm .showdrop .primary{
+	color:#337ab7;
+	background-color:white;
+}
+#postForm .color-selector .success,
+#postForm .showdrop .success{
+	color:#5cb85c;
+	background-color:black;
+}
+#postForm .color-selector .info,
+#postForm .showdrop .info{
+	color:#5bc0de;
+	background-color:black;
+}
+
+#postForm .color-selector .danger,
+#postForm .showdrop .danger{
+	color:#d9534f;
+	background-color:white;
+}

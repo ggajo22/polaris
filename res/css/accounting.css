@@ -1,0 +1,16 @@
+#account-content a{
+	color:black;
+}
+#account-list td[class*=환불]{
+	background-color:#f2dede !important;
+}
+
+#account-content .titleNum{
+	border:none;
+	box-shadow:none;
+	-webkit-box-shadow:none;
+	display: block;
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+}

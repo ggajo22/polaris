@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  </head>
+  <body>
+    <div id="result"></div>
+    <input type="text" id="title" name="title">
+    <textarea name="description" id="description" rows="8" cols="80"></textarea>
+    <input type="button" value="저장" id="submit">
+
+<script type="text/javascript">
+  $("#submit").click(function(){
+    $("#result").html('');
+    $.ajax({
+      url : 'ajax.php',
+      dataType : 'json',
+      type : 'POST',
+      data : {'title':$("#title").val(), 'description':$("#description").val()},
+      success : function(data){
+        if(data['result']==true){
+          $("#result").html(data['title']);
+        }
+      }
+    });
+  })
+</script>
+
+  </body>
+</html>

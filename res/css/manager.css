@@ -1,0 +1,32 @@
+
+.table .tableRow .headNum{
+	width:30px;
+}
+.table .tableRow .headNum span.remove{
+	display:none;
+	cursor:pointer;
+	margin-top:3px;
+}
+.table .tableRow:hover{
+	background-color:grey;
+	color:white;
+}
+.table .tableRow:hover input,
+.table .tableRow:hover textarea{
+	color:black;
+}
+.table .tableRow:hover .headNum span.num{
+	display:none;
+}
+.table .tableRow:hover .headNum span.remove{
+	display:block;
+}
+.table .privilege{
+	width:100px;
+	text-align:center;
+}
+
+#icon-panel{
+	width:100%;
+	max-width:500px;
+}

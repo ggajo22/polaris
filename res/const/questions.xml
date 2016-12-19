@@ -1,0 +1,63 @@
+<questions>
+	<question>
+		<flag>목소리</flag>
+		<title>목소리의 크기가 적절합니까?</title>
+	</question>
+	<question>
+		<flag>목소리</flag>
+		<title>말하는 속도가 적당합니까?</title>
+	</question>
+	<question>
+		<flag>목소리</flag>
+		<title>발음이 정확합니까(영어, 국어포함)?</title>
+	</question>
+	<question>
+		<flag>목소리</flag>
+		<title>목소리에 변화가 있습니까?</title>
+	</question>
+	<question>
+		<flag>몸동작</flag>
+		<title>몸동작이 의도적이고 적절합니까?</title>
+	</question>
+	<question>
+		<flag>몸동작</flag>
+		<title>학생들에게 시선을 주고 있습니까?</title>
+	</question>
+	<question>
+		<flag>몸동작</flag>
+		<title>모든 학생들을 살펴봅니까?</title>
+	</question>
+	<question>
+		<flag>강의진행</flag>
+		<title>강의에 열의가 느껴집니까?</title>
+	</question>
+	<question>
+		<flag>강의진행</flag>
+		<title>강의속도가 적절합니까?</title>
+	</question>
+	<question>
+		<flag>강의구성</flag>
+		<title>강의에 시작과 끝맺음이 있습니까?</title>
+	</question>
+	<question>
+		<flag>강의구성</flag>
+		<title>호기심을 유도합니까?</title>
+	</question>
+	<question>
+		<flag>강의구성</flag>
+		<title>가장 중요한 내용이 부각되었습니까?</title>
+	</question>
+	<question>
+		<flag>강의구성</flag>
+		<title>내용의 전달이 잘 되었습니까?</title>
+	</question>
+	<question>
+		<flag>종합</flag>
+		<title>전체적으로 강의에 대하여 만족하셨습니까?</title>
+	</question>
+	<question>
+		<flag>종합</flag>
+		<title>하고싶은 말</title>
+		<type>textarea</type>
+	</question>
+</questions>

@@ -1,0 +1,129 @@
+/* general*/
+body{
+	overflow:hidden;
+}
+
+#classorga-content a{
+	color:black;
+}
+
+#orga-final .input-group-addon{
+	padding:0 5px;
+}
+#classorga-content .thumbnail .glyphicon{
+	top:2px;
+}
+
+/* final */
+
+#orga-final .table tr>th,
+#orga-final .table tr.participant-item>td{
+	padding: 1px;
+}
+#orga-final .class-item{
+    padding-left:5px;
+	padding-left:5px;
+}
+#orga-final .class-item .caption{
+	padding:4px;
+}
+#orga-final #class-week-calendar>*{
+	width:100%;
+}
+/* body */
+
+#orga-final .input-group[class*=col-]{
+	float:left;
+}
+/* list-item */
+#orga-final .participant-item.active *{
+	background-color:gray !important;
+	color:white !important;
+}
+#orga-final .class-item .participant-item{
+	font-size:12px;
+	border-bottom:0;
+}
+#search-icon .help{
+	opacity:0;
+	-webkit-transition:opacity .2s ease-out;
+	transition:opacity .2s ease-out;
+	   
+	background-color: white;
+    top: -23px;
+    right: 0;
+    border: 1px solid;
+    padding: 3px;
+    border-radius: 2px;
+}
+#search-icon:hover .help{
+	opacity:1;
+}
+/* media */
+@media (max-width:768px){
+	body{
+		overflow:auto;
+	}
+}
+
+/* class */
+#class-body .class-item.folded .caption{
+	display:none;
+}
+#class-body .class-item.new .thumbnail{
+	background-color:khaki;
+}
+
+#class-body .class-item:not(.showDetail) .assign-stud-list .hidden-inclass,
+#class-body .class-item.showDetail .hidden-atdetail,
+.shown-inclass{
+	display:none;
+}
+
+#class-body .class-item:not(.showDetail) .assign-stud-list .shown-inclass{
+	display:initial;
+}
+#class-body .class-item:not(.showDetail) .assign-stud-list .float-inclass{
+	float:left;
+}
+#class-body .class-item:not(.showDetail) .assign-stud-list .float-inclass.right{
+	float:right;
+}
+
+#class-body .assign-stud-list .autoOrganized{
+	opacity:0.5;
+}
+#class-body .assign-stud-list .allduplicated>td{
+	background-color:#ffbf6f;
+	color:white;
+}
+#class-body .assign-stud-list .duplicated>td{
+	background-color:red;
+	color:white;
+}
+#class-body .over-limit{
+	border-radius:3px;
+	background-color:red;
+	color:white;
+}
+
+#orga-class .date-item{
+	display:block;
+	width:14.14%;
+	line-height:30px;
+	float:left;
+	cursor:pointer;
+}
+#orga-class .date-item:hover{
+	background-color:pink;
+}
+
+#orga-class .date-item.active{
+	background-color:#056957;
+	color:white;
+}
+
+#class-body .class-item p{
+	margin:0;
+	margin-bottom:5px;
+}

@@ -1,0 +1,83 @@
+.date-item{
+	display:block;
+	width:14.14%;
+	line-height:30px;
+	float:left;
+	cursor:pointer;
+}
+.date-item:hover{
+	background-color:pink;
+}
+
+.date-item.active{
+	background-color:green;
+	color:white;
+}
+#emp-schedule-calendar{
+	overflow-x:auto;
+}
+#emp-schedule-calendar .ui-datepicker-inline{
+	width:100%;
+	min-width:1024px;
+}
+#emp-schedule-calendar table{
+	table-layout:fixed;
+}
+#emp-schedule-calendar .ui-datepicker-calendar tbody tr,
+#emp-schedule-calendar .ui-datepicker-calendar tbody tr td,
+#emp-schedule-calendar .ui-datepicker-calendar tbody tr td>*{
+	height:130px;
+	position:relative;
+}
+#emp-schedule-calendar .ui-datepicker-calendar tbody tr td>*{
+	position:absolute;
+	width:100%;
+	top:0;
+}
+.hasData{
+	background-color:grey;
+}
+/* dateInfo */
+.dateInfo.hasSchedule{
+	background-color:rgba(70,205,255,0.2);
+}
+.dateInfo span{
+	float:left;
+}
+.dateInfo .extra{
+	height:60px;
+	font-size:12px;
+	border-radius:5px;
+}
+@media (max-width:500px){
+	.dateInfo .info_inout_time>*{
+		font-size:14px;	
+	}
+	.dateInfo .emp-time{
+		margin-top:14px;
+	}
+}
+.noconfirm{
+	background-color:#d9534f;
+	color:white;
+}
+.confirmed{
+	background-color:#5cb85c;
+	color:white;
+}
+
+#emp-schedule-list table{
+	background-color:white;
+	color:black;
+}
+/* 사원선택 */
+.emp-select-employee{
+	width:375px;
+}
+@media (max-width:500px){
+	.emp-select-employee{
+		width:100%;
+	}
+}
+
+

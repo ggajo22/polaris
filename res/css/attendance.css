@@ -1,0 +1,165 @@
+body{
+	overflow:hidden;
+}
+@media (max-width:533px){
+	body{ overflow-y:auto;}
+}
+.panel-heading{
+	position:relative;
+	height:50px;
+}
+.ivory-head{
+	background-color: ivory;
+    border-color: #F5F5E5;
+}
+.panel.wrapper:not(:first-child){
+	margin-top:20px;
+	border:0;
+}
+.panel.wrapper{
+	max-height:1000%;
+	overflow:hidden;
+	-webkit-transition:max-height .5s ease;
+			transition:max-height .5s ease;
+}
+.panel.wrapper.folded{
+	max-height:0;
+}
+.date-header{
+	background-color:#DEDEDE;
+	text-align:center;
+}
+.class-item{
+	outline: 1px solid #E8E8E8;
+    padding: 2px;
+}
+.class-item>.row{
+	margin:0;
+	min-height:16px;
+}
+.studRow{
+	height:100px;
+}
+.picture-head{
+	width:150px;
+}
+.stud-img{
+	height:100px;
+	width:150px;
+}
+
+@media (max-width:500px){
+	.stud-img,
+	.picture-head{
+		width:100px;
+	}
+}
+
+big{
+	font-weight:bold;
+}
+.attend-btn-group .btn{
+	opacity:0.25;
+	width:100px;
+	height:45px;
+	border-radius:0;
+	-webkit-transition: opacity .2s ease-in;
+			transition: opacity .2s ease-in;
+}
+.attend-btn-group .btn:hover,
+.attend-btn-group .btn.active{
+	opacity:1;
+}
+
+/* week head */
+@media (max-width:533px){
+	#weekly-schedule .panel-heading h2.title{
+		font-size:24px;
+	}
+}
+#week-table td {
+	padding:4px;
+}
+#week-table td.today{
+	background-color:#056960;
+	color:white;
+}
+#week-table th.today{
+	background-color:#034A5A;
+	color:wheat;
+}
+#week-table td:hover,
+#week-table td.active{
+	background-color:#77BFB9;
+}
+
+#weekly-schedule .badge-wrap{
+	letter-spacing:-4px;
+}
+
+/* daily */
+#daily-attendance .panel-heading{
+	height:auto;
+}
+@media (max-width:500px){
+	#daily-attendance .panel-heading{
+		margin-bottom:15px;
+	}
+	#daily-attendance .panel-body{
+		padding:0;
+	}
+}
+#daily-attendance .message-wrapper:not(.needtosubmit) .alert-mark,
+#daily-attendance .message-wrapper:not(.active) .send-mark{
+	display:none;
+}
+#file-list .badge,
+#daily-attendance .badge,
+#weekly-schedule .badge{
+	letter-spacing:0;
+	font-size:11px;
+	cursor:pointer;
+}
+#daily-attendance .top-right{
+	top: 5px;
+    right: 5px;
+}
+#daily-attendance .badge.danger{
+	background-color:red;
+}
+#daily-attendance td.modified{
+	background-color:#CCC;
+}
+
+/* functional */
+#weekly-schedule .class-item .stud-names{
+	left:0;
+	background-color:wheat;
+	max-height:28px;
+	color:#123;
+	z-index:-1;
+	opacity:0;
+	-webkit-transition:opacity .5s ease;
+			transition:opacity .5s ease;
+}
+#weekly-schedule .class-item.stud-finded .stud-names{
+	opacity:1;
+	z-index:120;
+}
+
+/* score */
+
+#attend-score .file-control-panel{
+	height:372px;
+}
+
+.ui-datepicker-calendar td.hasFile{
+	background-color:black;
+}
+#attend-score .message-wrapper{
+
+}
+#attend-score .message-wrapper:not(.needToEmail) .alert-mark,
+#attend-score .message-wrapper:not(.active) .send-mark{
+	display:none;
+}
