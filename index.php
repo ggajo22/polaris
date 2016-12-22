@@ -83,7 +83,7 @@
           <input type="button" class="btn btn-warning btn-lg" value="닫기" id="close_btn">
         </div>
         <div class="col-xs-offset-11">
-          <input type="button" class="btn btn-danger hidden" value="삭제" id="delete_btn">
+          <input type="submit" class="btn btn-danger hidden" value="삭제" id="delete_btn">
         </div>
       </div>
     </form>
@@ -190,6 +190,11 @@ $("#input_end_date").datepicker("option", "onClose", function (selectedDate){
     });
   });
 
+  // 삭제 버튼 시 book_delete.php 로 이동
+  $("#delete_btn").click(function(){
+    $("#inputLayer").attr('action', 'add_process/book_delete.php');
+  })
+
 function getFormatDate(date){
   var year = date.getFullYear();                                 //yyyy
  	var month = (1 + date.getMonth());                     //M
@@ -208,6 +213,7 @@ function getFormatDate2(date){
  	return  year + '-' + month + '-' + day;
  }
 
+// 입력창에 정보 가져오기
   var resData = <?=json_encode($resData);?>;
 function showInputLayer(cell){
   var $targetCell = $(cell);
