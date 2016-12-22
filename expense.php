@@ -15,14 +15,14 @@
 
 <!-- 입력창-->
 <div class="container">
-  <form id="inputLayer" class="hidden row inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px; top:250px;">
+  <form id="inputLayer" class="hidden row inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px; top:250px;" onsubmit="return check_input()">
     <div class="form-group col-xs-4">
       <label for="exp_date">결제일(필수)</label>
       <input type="text" class="form-control datepicker" name="exp_date" id="input_exp_date">
     </div>
     <div class="form-group col-xs-4">
       <label for="exp_key">대분류(필수)</label>
-      <select class="form-control" name="exp_key" id="input_room_id">
+      <select class="form-control" name="exp_key" id="input_exp_key">
         <option>대분류 선택</option>
         <?php
           foreach($keyData as $kd){
@@ -30,10 +30,12 @@
           }
         ?>
       </select>
+
+
     </div>
     <div class="form-group col-xs-4">
       <label for="exp_detail">상세분류(필수)</label>
-      <select class="form-control" name="exp_detail" id="input_platform_id">
+      <select class="form-control" name="exp_detail" id="input_exp_detail">
         <option>상세분류 선택</option>
         <?php
           foreach($detailData as $dd){
@@ -44,19 +46,19 @@
     </div>
     <div class="form-group col-xs-3">
       <label for="exp_where">구매처(필수)</label>
-      <input type="text" class="form-control" name="exp_where" id="input_total_price">
+      <input type="text" class="form-control" name="exp_where" id="input_exp_where">
     </div>
     <div class="form-group col-xs-3">
       <label for="exp_requester">구매(요청)자</label>
-      <input type="text" class="form-control" name="exp_requester" id="input_paid_price">
+      <input type="text" class="form-control" name="exp_requester" id="input_exp_requester">
     </div>
     <div class="form-group col-xs-3">
       <label for="exp_price">지출금액(필수)</label>
-      <input type="text" class="form-control" name="exp_price" id="input_paid_price">
+      <input type="text" class="form-control" name="exp_price" id="input_exp_price">
     </div>
     <div class="form-group col-xs-3">
       <label for="exp_payments">결제방법(필수)</label>
-      <select class="form-control" name="exp_payments" id="input_platform_id">
+      <select class="form-control" name="exp_payments" id="input_exp_payments">
         <option>결제방법 선택</option>
         <?php
           foreach($paymData as $pd){
@@ -67,24 +69,22 @@
     </div>
     <div class="form-group col-xs-12 rowspan-2">
       <label for="exp_comment">코멘트</label>
-      <textarea type="text" class="form-control" name="exp_comment" id="input_comment" maxlength='200' style='min-height:105px; max-width:1000px;'></textarea>
+      <textarea type="text" class="form-control" name="exp_comment" id="input_exp_comment" maxlength='200' style='min-height:105px; max-width:1000px;'></textarea>
     </div>
-
     <div class="col-xs-offset-5">
       <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
       <input type="button" class="btn btn-danger btn-lg" value="닫기" id="close_btn">
     </div>
   </form>
 </div>
-
-<div class="container">
-  <div class="input-group">
+    <div class="col-xs-6 col-xs-offset-2">
       <input type="text" name='PAYM_START_DATE' class="datepicker" id="paym_start_date" name="paym_start_date" value="<?=date("Y-m-d")?>" />
       <input type="text" name='PAYM_END_DATE' class="datepicker" id="paym_end_date" name="paym_end_date" value="<?=date("Y-m-d")?>" />
       <input type="submit" class="btn btn-danger" value="날짜별 검색" id="select_date_btn">
+    </div>
+    <div class="col-xs-1 col-xs-offset-1">
       <input type="button" class="btn btn-success" value="추가" id="add_btn">
-  </div>
-</div>
+    </div>
 <div class='padding30'>
   <table id="exp_report" class="table table-hover text-center">
     <thead>
@@ -105,7 +105,7 @@
 <div class="hidden">
   <table>
     <tbody>
-      <tr class="skeleton" name="id" data-inflate="id">
+      <tr class="skeleton" name="id" data-inflate="data-exp-id">
         <td><span name="id"></span></td>
         <td><span name="exp_date"></span></td>
         <td><span name="exp_key"></span></td>
@@ -147,7 +147,7 @@
 
   $("#select_date_btn").click(function(){
     $.post("proc/dao_expense.php", function(expData){
-      $("#exp_report").empty();
+      $("#exp_report tbody").empty();
       $("#summary tbody").empty();
       var expData = <?=json_encode($expData);?>;
       var start = new Date($('[name=PAYM_START_DATE]').val());
@@ -208,16 +208,31 @@
    return number;
   }
 
-
   function check_input(){
-    if($('#input_guest_name').val() == ""){
-      alert("이름을 입력하세요.");
-      $("#input_guest_name").focus();
+    if($('#input_exp_date').val() == ""){
+      alert("결제일을 입력하세요.");
+      $("#input_exp_date").focus();
       return false;
-    } else if($('#input_room_id').val() == ""){
-      alert("방번호를 입력하세요.");
-      $("#input_room_id").focus();
+    } else if($('#input_exp_key').val() == "대분류 선택"){
+      alert("대분류를 입력하세요.");
+      $("#input_exp_key").focus();
       return false;
-    }
+    } else if($('#input_exp_detail').val() == "상세분류 선택"){
+      alert("상세분류를 입력하세요.");
+      $("#input_exp_detail").focus();
+      return false;
+    } else if($('#input_exp_where').val() == ""){
+      alert("구매처를 입력하세요.");
+      $("#input_exp_where").focus();
+      return false;
+    } else if($('#input_exp_price').val() == ""){
+      alert("지출금액을 입력하세요.");
+      $("#input_exp_price").focus();
+      return false;
+    } else if($('#input_exp_payments').val() == "결제방법 선택"){
+      alert("결제방법을 입력하세요.");
+      $("#input_exp_payments").focus();
+      return false;
+    } return true;
   }
 </script>

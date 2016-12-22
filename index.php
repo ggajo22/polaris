@@ -3,90 +3,109 @@
   require("proc/dao_main.php");
  ?>
   <div class="padding30">
-    <!-- 입력창 -->
-    <form id="inputLayer" name="input_res" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;">
-      <div class="hidden form-group">
-        <input type="text" name="res_info_id" id="input_res_info_id">
-      </div>
-      <div class="form-group col-xs-6">
-        <label for="guest_name">이름(필수)</label>
-        <input type="text" class="form-control" name="guest_name" id="input_guest_name">
-      </div>
-      <div class="form-group col-xs-2">
-        <label for="persons">인원</label>
-        <input type="text" class="form-control" name="persons" id="input_persons">
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="room_id">방번호(필수)</label>
-        <select class="form-control" name="room_id" id="input_room_id">
-          <option>방번호를 선택하세요</option>
-          <?php
-            foreach($room_data as $rm){
-              echo '<option value="'.$rm['room_id'].'">'.$rm['type'].' '.$rm['room_no'].'</option>';
-            }
-          ?>
-        </select>
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="start_date">체크인(필수)</label>
-        <input type="text" class="datepicker form-control" name="start_date" id="input_start_date">
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="end_date">체크아웃(필수)</label>
-        <input type="text" class="datepicker form-control" name="end_date" id="input_end_date">
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="platform_id">플랫폼(필수)</label>
-        <select class="form-control" name="platform_id" id="input_platform_id">
-          <option>플랫폼을 선택하세요</option>
-          <?php
-            foreach($platforms as $pfs){
-              echo '<option value="'.$pfs['platform_id'].'">'.$pfs['platform_name'].'</option>';
-            }
-          ?>
-        </select>
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="total_price">결제총액(필수)</label>
-        <input type="text" class="form-control" name="total_price" id="input_total_price">
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="payment_method_id">결제방법(필수)</label>
-        <select class="form-control" name="payment_method_id" id="input_payment_method_id">
-          <option>결제방법을 선택하세요</option>
-          <?php
-            foreach($payment_methods as $pms){
-              echo '<option value="'.$pms['payment_method_id'].'">'.$pms['payment_method_name'].'</option>';
-            }
-          ?>
-        </select>
-      </div>
-      <div class="form-group col-xs-4">
-        <label for="paid_price">결제금액(필수)</label>
-        <input type="text" class="form-control" name="paid_price" id="input_paid_price">
-      </div>
-      <div class="form-group col-xs-9 rowspan-2">
-        <label for="comment">코멘트</label>
-        <textarea type="text" class="form-control" name="comment" id="input_comment" maxlength='200' style='min-height:105px; max-width:500px;'></textarea>
-      </div>
-      <div class="form-group col-xs-3">
-        <label for="payment_date">결제일(필수)</label>
-        <input type="text" class="form-control datepicker" name="payment_date" id="input_payment_date">
-      </div>
-      <div class="form-group col-xs-3">
-        <label for="created_by">결제자(필수)</label>
-        <input type="text" class="form-control" name="created_by" id="input_created_by">
-      </div>
-      <div class="row">
-        <div class="col-xs-offset-5">
-          <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
-          <input type="button" class="btn btn-warning btn-lg" value="닫기" id="close_btn">
-        </div>
-        <div class="col-xs-offset-11">
-          <input type="submit" class="btn btn-danger hidden" value="삭제" id="delete_btn">
-        </div>
-      </div>
-    </form>
+    <!--<ul class="tab" id="tab">
+      <li>입력폼1</li>
+      <li>입력폼2</li>
+    </ul>
+    <ul class="panel" id="panel">
+      <li id="tab1">-->
+        <!-- 입력창 -->
+        <form id="inputLayer" name="input_res" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;" onsubmit="return check_input()">
+          <div class="hidden form-group">
+            <input type="text" name="res_info_id" id="input_res_info_id">
+          </div>
+          <div class="form-group col-xs-6">
+            <label for="guest_name">이름(필수)</label>
+            <input type="text" class="form-control" name="guest_name" id="input_guest_name">
+          </div>
+          <div class="form-group col-xs-2">
+            <label for="persons">인원</label>
+            <input type="text" class="form-control" name="persons" id="input_persons">
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="room_id">방번호(필수)</label>
+            <select class="form-control" name="room_id" id="input_room_id">
+              <option>방번호를 선택하세요</option>
+              <?php
+                foreach($room_data as $rm){
+                  echo '<option value="'.$rm['room_id'].'">'.$rm['type'].' '.$rm['room_no'].'</option>';
+                }
+              ?>
+            </select>
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="start_date">체크인(필수)</label>
+            <input type="text" class="datepicker form-control" name="start_date" id="input_start_date">
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="end_date">체크아웃(필수)</label>
+            <input type="text" class="datepicker form-control" name="end_date" id="input_end_date">
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="platform_id">플랫폼(필수)</label>
+            <select class="form-control" name="platform_id" id="input_platform_id">
+              <option>플랫폼을 선택하세요</option>
+              <?php
+                foreach($platforms as $pfs){
+                  echo '<option value="'.$pfs['platform_id'].'">'.$pfs['platform_name'].'</option>';
+                }
+              ?>
+            </select>
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="total_price">결제총액(필수)</label>
+            <input type="text" class="form-control" name="total_price" id="input_total_price">
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="payment_method_id">결제방법(필수)</label>
+            <select class="form-control" name="payment_method_id" id="input_payment_method_id">
+              <option>결제방법을 선택하세요</option>
+              <?php
+                foreach($payment_methods as $pms){
+                  echo '<option value="'.$pms['payment_method_id'].'">'.$pms['payment_method_name'].'</option>';
+                }
+              ?>
+            </select>
+          </div>
+          <div class="form-group col-xs-4">
+            <label for="paid_price">결제금액(필수)</label>
+            <input type="text" class="form-control" name="paid_price" id="input_paid_price">
+          </div>
+          <div class="form-group col-xs-9 rowspan-2">
+            <label for="comment">코멘트</label>
+            <textarea type="text" class="form-control" name="comment" id="input_comment" maxlength='200' style='min-height:105px; max-width:500px;'></textarea>
+          </div>
+          <div class="form-group col-xs-3">
+            <label for="payment_date">결제일(필수)</label>
+            <input type="text" class="form-control datepicker" name="payment_date" id="input_payment_date">
+          </div>
+          <div class="form-group col-xs-3">
+            <label for="created_by">결제자(필수)</label>
+            <input type="text" class="form-control" name="created_by" id="input_created_by">
+          </div>
+          <div class="row">
+            <div class="col-xs-offset-5">
+              <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
+              <input type="button" class="btn btn-warning btn-lg" value="닫기" id="close_btn">
+            </div>
+            <div class="col-xs-offset-11">
+              <input type="submit" class="btn btn-danger hidden" value="삭제" id="delete_btn">
+            </div>
+          </div>
+        </form>
+      <!--</li>
+      <li id="tab2">
+        <form id="inputLayer" name="input_res" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;">
+          <div class="hidden form-group">
+            <input type="text" name="res_info_id" id="input_res_info_id">
+          </div>
+          <div class="form-group col-xs-6">
+            <label for="guest_name">이름(필수)</label>
+            <input type="text" class="form-control" name="guest_name" id="input_guest_name">
+          </div>
+      </li>
+    </ul>-->
+
     <!-- 입력 버튼-->
     <div class="row">
       <div class="col-md-1">
@@ -297,10 +316,6 @@ function showInputLayer(cell){
   $("#close_btn").click(function(){
     $("#inputLayer").addClass("hidden");
   });
-  // 유효성검사 function 실행
-  $("#submit_btn").click(function(){
-    check_input();
-  });
 
 function closeBtn_ESC(){
   // ESC키 누르면 입력창 닫기 설정
@@ -308,12 +323,13 @@ function closeBtn_ESC(){
   if(keycode == 27) {$("#close_btn").click();}
 }
 
+// 유효성 검사
 function check_input(){
   if($('#input_guest_name').val() == ""){
     alert("이름을 입력하세요.");
     $("#input_guest_name").focus();
     return false;
-  } else if($('#input_room_id').val() == ""){
+  } else if($('#input_room_id').val() == "방번호를 선택하세요"){
     alert("방번호를 입력하세요.");
     $("#input_room_id").focus();
     return false;
@@ -333,7 +349,7 @@ function check_input(){
     alert("결제총액을 입력하세요.");
     $("#input_total_price").focus();
     return false;
-  } else if($('#input_payment_method_id').val() == ""){
+  } else if($('#input_payment_method_id').val() == "결제방법을 선택하세요"){
     alert("결제방법을 입력하세요.");
     $("#input_payment_method_id").focus();
     return false;
