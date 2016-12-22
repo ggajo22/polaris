@@ -13,48 +13,9 @@
   </table>
 </div>
 
-<div class="container">
-  <div class="input-group">
-      <input type="text" name='PAYM_START_DATE' class="datepicker" id="paym_start_date" name="paym_start_date" value="<?=date("Y-m-d")?>" />
-      <input type="text" name='PAYM_END_DATE' class="datepicker" id="paym_end_date" name="paym_end_date" value="<?=date("Y-m-d")?>" />
-      <input type="submit" class="btn btn-danger" value="날짜별 검색" id="select_date_btn">
-      <input type="button" class="btn btn-success" value="추가" id="add_btn">
-  </div>
-</div>
-<div class='padding30 container'>
-  <table id="exp_report" class="table table-hover text-center">
-    <thead>
-      <th>결제일</th>
-      <th>대분류</th>
-      <th>상세분류</th>
-      <th>구매처</th>
-      <th>구매(요청)자</th>
-      <th>내용</th>
-      <th>지출금액</th>
-      <th>결제방법</th>
-    </thead>
-    <tbody></tbody>
-    <tfoot></tfoot>
-  </table>
-</div>
-<div class="hidden">
-  <table>
-    <tr class="skeleton">
-      <td><span name="exp_date"></span></td>
-      <td><span name="exp_key"></span></td>
-      <td><span name="exp_detail"></span></td>
-      <td><span name="exp_where"></span></td>
-      <td><span name="exp_requester"></span></td>
-      <td><span name="exp_comment"></span></td>
-      <td><span name="exp_price"></span></td>
-      <td><span name="exp_payments"></span></td>
-    </tr>
-  </table>
-</div>
-
 <!-- 입력창-->
 <div class="container">
-  <form id="inputLayer" class="hidden row inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px;">
+  <form id="inputLayer" class="hidden row inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px; top:250px;">
     <div class="form-group col-xs-4">
       <label for="exp_date">결제일(필수)</label>
       <input type="text" class="form-control datepicker" name="exp_date" id="input_exp_date">
@@ -116,6 +77,49 @@
   </form>
 </div>
 
+<div class="container">
+  <div class="input-group">
+      <input type="text" name='PAYM_START_DATE' class="datepicker" id="paym_start_date" name="paym_start_date" value="<?=date("Y-m-d")?>" />
+      <input type="text" name='PAYM_END_DATE' class="datepicker" id="paym_end_date" name="paym_end_date" value="<?=date("Y-m-d")?>" />
+      <input type="submit" class="btn btn-danger" value="날짜별 검색" id="select_date_btn">
+      <input type="button" class="btn btn-success" value="추가" id="add_btn">
+  </div>
+</div>
+<div class='padding30'>
+  <table id="exp_report" class="table table-hover text-center">
+    <thead>
+      <th>결제번호</th>
+      <th>결제일</th>
+      <th>대분류</th>
+      <th>상세분류</th>
+      <th>구매처</th>
+      <th>구매(요청)자</th>
+      <th>내용</th>
+      <th>지출금액</th>
+      <th>결제방법</th>
+    </thead>
+    <tbody></tbody>
+    <tfoot></tfoot>
+  </table>
+</div>
+<div class="hidden">
+  <table>
+    <tbody>
+      <tr class="skeleton" name="id" data-inflate="id">
+        <td><span name="id"></span></td>
+        <td><span name="exp_date"></span></td>
+        <td><span name="exp_key"></span></td>
+        <td><span name="exp_detail"></span></td>
+        <td><span name="exp_where"></span></td>
+        <td><span name="exp_requester"></span></td>
+        <td><span name="exp_comment"></span></td>
+        <td><span name="exp_price"></span></td>
+        <td><span name="exp_payments"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <script src="./res/js/mgTable.js"></script>
 <script src="./res/js/mgImg.js"></script>
 <script src="./res/js/string.js"></script>
@@ -165,6 +169,7 @@
             _expData.push(expData[i]);
           }
         }
+        console.log(_expData);
 
       var skeleton = $(".skeleton");
       for(i=0; i<_expData.length; i++){
@@ -201,5 +206,18 @@
    }
 
    return number;
+  }
+
+
+  function check_input(){
+    if($('#input_guest_name').val() == ""){
+      alert("이름을 입력하세요.");
+      $("#input_guest_name").focus();
+      return false;
+    } else if($('#input_room_id').val() == ""){
+      alert("방번호를 입력하세요.");
+      $("#input_room_id").focus();
+      return false;
+    }
   }
 </script>
