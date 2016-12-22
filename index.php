@@ -4,7 +4,10 @@
  ?>
   <div class="padding30">
     <!-- 입력창 -->
-    <form id="inputLayer" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;">
+    <form id="inputLayer" name="input_res" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;">
+      <div class="hidden form-group">
+        <input type="text" name="res_info_id" id="input_res_info_id">
+      </div>
       <div class="form-group col-xs-6">
         <label for="guest_name">이름(필수)</label>
         <input type="text" class="form-control" name="guest_name" id="input_guest_name">
@@ -74,9 +77,14 @@
         <label for="created_by">결제자(필수)</label>
         <input type="text" class="form-control" name="created_by" id="input_created_by">
       </div>
-      <div class="col-xs-offset-5">
-        <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
-        <input type="button" class="btn btn-danger btn-lg" value="닫기" id="close_btn">
+      <div class="row">
+        <div class="col-xs-offset-5">
+          <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
+          <input type="button" class="btn btn-warning btn-lg" value="닫기" id="close_btn">
+        </div>
+        <div class="col-xs-offset-11">
+          <input type="button" class="btn btn-danger hidden" value="삭제" id="delete_btn">
+        </div>
       </div>
     </form>
     <!-- 입력 버튼-->
@@ -102,14 +110,9 @@
   </div> <!-- padding30 -->
 
 <script type="text/javascript">
-$(document).ready(function(){
- var today = new Date();
- makeTable();
- dateSelect();
- inputBtn();
- closeBtn();
+  var today = new Date();
+  makeTable();
 
-function dateSelect(){
   // 기준일 설정
   $('#btnDateSelect').click(function(){
     today = new Date($('#dateSelected:text').val());
@@ -118,7 +121,6 @@ function dateSelect(){
     $('#dustmq tfoot').empty();
     makeTable();
   });
-}
 
 // 테이블 만들기
 function makeTable(){
@@ -161,7 +163,32 @@ function makeTable(){
     $("#own_"+cnt_date[i]['date_of_stay']).append(cnt_date[i]['cnt_date']);
   }
 }
-}); // 전체 function 닫는 괄호(왜 여기에 있어야만 작동하는지 모르겠음)
+
+
+<!-- datepicker 설정 -->
+$('.datepicker').datepicker({
+  dateFormat:'yy-mm-dd'
+});
+$("#input_start_date").datepicker();
+$("#input_start_date").datepicker("option", "maxDate", $("#input_end_date").val());
+$("#input_start_date").datepicker("option", "onClose", function (selectedDate){
+  $("#input_end_date").datepicker("option", "minDate", selectedDate);
+});
+
+$("#input_end_date").datepicker();
+$("#input_end_date").datepicker("option", "minDate", $("#input_start_date").val());
+$("#input_end_date").datepicker("option", "onClose", function (selectedDate){
+  $("#input_start_date").datepicker("option", "maxDate", selectedDate);
+});
+
+  // 입력창 생성
+  $("#input_res_btn").click(function(){
+    $("#inputLayer").toggleClass("hidden");
+    $("#inputLayer").css({
+      left:600,
+      top:200
+    });
+  });
 
 function getFormatDate(date){
   var year = date.getFullYear();                                 //yyyy
@@ -180,33 +207,6 @@ function getFormatDate2(date){
  	day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
  	return  year + '-' + month + '-' + day;
  }
-
-<!-- datepicker 설정 -->
-$('.datepicker').datepicker({
-  dateFormat:'yy-mm-dd'
-});
-$("#input_start_date").datepicker();
-$("#input_start_date").datepicker("option", "maxDate", $("#input_end_date").val());
-$("#input_start_date").datepicker("option", "onClose", function (selectedDate){
-  $("#input_end_date").datepicker("option", "minDate", selectedDate);
-});
-
-$("#input_end_date").datepicker();
-$("#input_end_date").datepicker("option", "minDate", $("#input_start_date").val());
-$("#input_end_date").datepicker("option", "onClose", function (selectedDate){
-  $("#input_start_date").datepicker("option", "maxDate", selectedDate);
-});
-
-function inputBtn(){
-  // 입력창 생성
-  $("#input_res_btn").click(function(){
-    $("#inputLayer").toggleClass("hidden");
-    $("#inputLayer").css({
-      left:600,
-      top:200
-    });
-  });
-}
 
   var resData = <?=json_encode($resData);?>;
 function showInputLayer(cell){
@@ -228,12 +228,18 @@ function showInputLayer(cell){
   if(id){
     var _resDat = resData[id];
 
+    // 삭제 보이게, 수정으로
+    $("#delete_btn").removeClass("hidden");
+    $("#submit_btn").val("수정");
+    $("#inputLayer").attr('action', 'add_process/book_modify.php');
+
     for(var _attrName in _resDat){
       var _value = _resDat[_attrName];
       if($('#input_'+_attrName).length > 0){
          $('#input_'+_attrName).val(_resDat[_attrName]);
        }
       }
+    console.log($("#input_res_info_id").val());
 
     if(_resDat['payment']){
       var __paid_price = [];
@@ -261,6 +267,7 @@ function showInputLayer(cell){
         $("#input_end_date").val(__max_date_of_stay);
      }
   } else {
+    // 원상복귀
     $("#input_guest_name").val('');
     $("#input_persons").val('');
     $("#input_room_id").val($(cell).attr('data-room-id'));
@@ -273,22 +280,70 @@ function showInputLayer(cell){
     $("#input_comment").val('');
     $("#input_payment_date").val('');
     $("#input_created_by").val('');
+    $("#delete_btn").addClass("hidden");
+    $("#submit_btn").val("저장");
+    $("#inputLayer").attr('action', 'add_process/book_add.php');
   }
 }
 
   // 입력창 닫기
-  function closeBtn(){
-    $(window).keydown (closeBtn_ESC);
-    $("#close_btn").click(function(){
-      $("#inputLayer").addClass("hidden");
-    });
-  }
-
+  $(window).keydown (closeBtn_ESC);
+  $("#close_btn").click(function(){
+    $("#inputLayer").addClass("hidden");
+  });
+  // 유효성검사 function 실행
+  $("#submit_btn").click(function(){
+    check_input();
+  });
 
 function closeBtn_ESC(){
   // ESC키 누르면 입력창 닫기 설정
   var keycode = window.event.keyCode;
   if(keycode == 27) {$("#close_btn").click();}
+}
+
+function check_input(){
+  if($('#input_guest_name').val() == ""){
+    alert("이름을 입력하세요.");
+    $("#input_guest_name").focus();
+    return false;
+  } else if($('#input_room_id').val() == ""){
+    alert("방번호를 입력하세요.");
+    $("#input_room_id").focus();
+    return false;
+  } else if($('#input_start_date').val() == ""){
+    alert("체크인날짜를 입력하세요.");
+    $("#input_start_date").focus();
+    return false;
+  } else if($('#input_end_date').val() == ""){
+    alert("체크아웃날짜를 입력하세요.");
+    $("#input_end_date").focus();
+    return false;
+  } else if($('#input_platform_id').val() == "플랫폼을 선택하세요"){
+    alert("플랫폼을 입력하세요.");
+    $("#input_platform_id").focus();
+    return false;
+  } else if($('#input_total_price').val() == ""){
+    alert("결제총액을 입력하세요.");
+    $("#input_total_price").focus();
+    return false;
+  } else if($('#input_payment_method_id').val() == ""){
+    alert("결제방법을 입력하세요.");
+    $("#input_payment_method_id").focus();
+    return false;
+  } else if($('#input_paid_price').val() == ""){
+    alert("결제금액을 입력하세요.");
+    $("#input_paid_price").focus();
+    return false;
+  } else if($('#input_payment_date').val() == ""){
+    alert("결제일을 입력하세요.");
+    $("#input_payment_date").focus();
+    return false;
+  } else if($('#input_created_by').val() == ""){
+    alert("결제자를 입력하세요.");
+    $("#input_created_by").focus();
+    return false;
+  }
 }
 
 </script>
