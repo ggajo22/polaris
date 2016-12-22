@@ -1,125 +1,10 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "autoset");
-mysqli_select_db($conn, "polaris2");
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <link href="./res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./res/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-
-    <style>
-      th {
-        text-align: center;
-      }
-      .inputLayer {
-        background-color : #EAEAEA;
-        padding : 10px 10px 10px 10px;
-      }
-      #dustmq tfoot {
-        background-color : skyblue;
-      }
-      .padding-right-5 {
-        padding-right : 5px;
-      }
-
-      .padding30{
-        padding-top: 40px;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- 네비 -->
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-default">
-        <div class="container-fluid">
-          <ul class="nav nav-pills">
-            <li role="presentation"><a href ="/vhfrhksfl"> 예약현황 </a></li>
-            <li role="presentation"><a href ="/vhfrhksfl/report.php"> 예약집계 </a></li>
-            <li role="presentation"><a href ="/index.php/exp"> 지출현황 </a></li>
-            <li role="presentation"><a href ="/index.php/res/room"> 방정보 </a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-<?php
-    // room list 가져오기
-    $result = mysqli_query($conn, "SELECT * FROM room");
-    $room_data = array();
-    while($row = mysqli_fetch_assoc($result))
-    {
-      $room_data[] = $row;
-    }
-    // 달력에 뿌릴 정보 가져오기
-    $result = mysqli_query($conn, "SELECT r.res_info_id, room_no, date_of_stay, guest_name, pf.platform_id, color FROM res as r LEFT JOIN res_info as ri ON r.res_info_id = ri.res_info_id LEFT JOIN room as rm ON ri.room_id = rm.room_id LEFT JOIN platform as pf ON ri.platform_id = pf.platform_id");
-    $res_data = array();
-    while($row = mysqli_fetch_assoc($result)){
-      $res_data[] = $row;
-    }
-
-    // 플랫폼 list 가져오기
-    $result = mysqli_query($conn, "SELECT * FROM platform");
-    $platforms = array();
-    while($row = mysqli_fetch_assoc($result))
-    {
-     $platforms[] = $row;
-    }
-
-    // 결제방법 list 가져오기
-    $result = mysqli_query($conn, "SELECT * FROM payment_method");
-    $payment_methods = array();
-    while($row = mysqli_fetch_assoc($result))
-    {
-     $payment_methods[] = $row;
-    }
-
-    // 날짜별 카운트 정보 가져오기
-    $result = mysqli_query($conn, "SELECT date_of_stay, count('date_of_stay') as cnt_date FROM res GROUP BY date_of_stay");
-    $cnt_date = array();
-    while($row = mysqli_fetch_assoc($result))
-    {
-     $cnt_date[] = $row;
-    }
-
-    // 입력창에 입력되어있는 정보 가져와서 뿌릴 정보 가져오기
-    $resData = array();
-    $result = mysqli_query($conn, "SELECT * FROM res_info as ri LEFT JOIN room as rm ON ri.room_id = rm.room_id");
-    while($row = mysqli_fetch_assoc($result)){
-      // $row['res_info_id'] 가 유니크하게 무조건 1 개만 있다는 가정하에
-      $resData[$row['res_info_id']] = $row;
-    }
-
-    $result = mysqli_query($conn, "SELECT * FROM res");
-    while($row = mysqli_fetch_assoc($result)){
-      if(isset($resData[$row['res_info_id']])){
-         // $resData[$row['res_info_id']] 가 위에서 선언이 돼 있어야만 한다.
-         // 즉 이미 불러온 res_info 데이터에만 추가해 줄 것.
-         if(!isset($resData[$row['res_info_id']]['res'])){
-           $resData[$row['res_info_id']]['res'] = array();// $resData에 res라는 어트리뷰트가 없으면 res어트리뷰트를 array로 먼저 선언해준다.
-         }
-         $resData[$row['res_info_id']]['res'][] = $row;
-      }
-    }
-
-    $result = mysqli_query($conn, "SELECT * FROM payment pm LEFT JOIN payment_method pmm ON pm.payment_method_id = pmm.payment_method_id");
-    while($row = mysqli_fetch_assoc($result)){
-      if(isset($resData[$row['res_info_id']])){
-         if(!isset($resData[$row['res_info_id']]['payment'])){
-           $resData[$row['res_info_id']]['payment'] = array();
-         }
-         $resData[$row['res_info_id']]['payment'][] = $row;
-      }
-    }
-?>
+  require("view/header.php");
+  require("proc/dao_main.php");
+ ?>
   <div class="padding30">
     <!-- 입력창 -->
-    <form id="inputLayer" class="hidden row inputLayer" action="process.php" method="post" style="position:absolute; width:800px;">
+    <form id="inputLayer" class="hidden row inputLayer" action="add_process/book_add.php" method="post" style="position:absolute; width:800px;">
       <div class="form-group col-xs-6">
         <label for="guest_name">이름(필수)</label>
         <input type="text" class="form-control" name="guest_name" id="input_guest_name">
@@ -190,7 +75,7 @@ mysqli_select_db($conn, "polaris2");
         <input type="text" class="form-control" name="created_by" id="input_created_by">
       </div>
       <div class="col-xs-offset-5">
-        <input type="button" class="btn btn-success btn-lg" value="저장" id="submit_btn">
+        <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
         <input type="button" class="btn btn-danger btn-lg" value="닫기" id="close_btn">
       </div>
     </form>
@@ -215,16 +100,6 @@ mysqli_select_db($conn, "polaris2");
       </tfoot>
     </table>
   </div> <!-- padding30 -->
-
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="./res/js/jquery-1.11.3.min.js"></script>
-    <script src="./res/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./res/bootstrap/js/bootstrap.min.js"></script>
-
-
-
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -416,27 +291,6 @@ function closeBtn_ESC(){
   if(keycode == 27) {$("#close_btn").click();}
 }
 
-$("#submit_btn").click(function(){
-  $.ajax({
-    url : 'process.php',
-    dataType : 'json',
-    type : 'POST',
-    data : {'guest_name':$("#input_guest_name").val(), 'persons':$("#input_persons").val(), 'room_id':$("#input_room_id").val(),
-            'start_date':$("#input_start_date").val(), 'end_date':$("#input_end_date").val(), 'platform_id':$("#input_platform_id").val(),
-            'total_price':$("#input_total_price").val(), 'payment_method_id':$("#input_payment_method_id").val(), 'paid_price':$("#input_paid_price").val(),
-            'comment':$("#input_comment").val(), 'payment_date':$("#input_payment_date").val(), 'created_by':$("#input_created_by").val()},
-    success : function(data){
-      if(data['result']==true){
-        $("#inputLayer").addClass("hidden");
-        console.log(data);
-      }
-    },
-
-    error : function(data){
-      console.log("에러입니다");
-    }
-  });
-});
 </script>
  </body>
 </html>

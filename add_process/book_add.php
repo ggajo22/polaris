@@ -1,23 +1,9 @@
 <?php
-  echo json_encode(array('result'=>true, 'guest_name'=>$_REQUEST['guest_name'], 'persons'=>$_REQUEST['persons'], 'start_date'=>$_REQUEST['start_date'], 'end_date'=>$_REQUEST['end_date'],
-  'platform_id'=>$_REQUEST['platform_id'], 'total_price'=>$_REQUEST['total_price'], 'payment_method_id'=>$_REQUEST['payment_method_id'], 'payment_method_id'=>$_REQUEST['payment_method_id'],
-  'paid_price'=>$_REQUEST['paid_price'], 'comment'=>$_REQUEST['comment'], 'payment_date'=>$_REQUEST['payment_date'], 'created_by'=>$_REQUEST['created_by']));
-
-  // 달력에 뿌릴 정보 가져오기
-  $result = mysqli_query($conn, "SELECT r.res_info_id, room_no, date_of_stay, guest_name, pf.platform_id, color FROM res as r LEFT JOIN res_info as ri ON r.res_info_id = ri.res_info_id LEFT JOIN room as rm ON ri.room_id = rm.room_id LEFT JOIN platform as pf ON ri.platform_id = pf.platform_id");
-  $res_data = array();
-  while($row = mysqli_fetch_assoc($result)){
-  $res_data[] = $row;
-  }
-
-  $conn = mysqli_connect("localhost", "root", "autoset");
-  mysqli_select_db($conn, "polaris2");
+$conn = mysqli_connect("localhost", "root", "autoset");
+mysqli_select_db($conn, "polaris2");
 
   $start_date = $_POST['start_date'];
   $end_date = $_POST['end_date'];
-  if($start_date>=$end_date){
-    echo "체크인, 체크아웃 날짜를 확인하세요";
-    } else {
 
   // $end_date 하루 전날까지 저장
   $end_date = date("Y-m-d", strtotime("-1 day", strtotime($end_date)));
@@ -61,11 +47,10 @@
      $result3 = mysqli_query($conn, $sql3);
 
     // 메인페이지로 돌아가기
-    //header('Location: http://localhost/vhfrhksfl/index.php');
+     header('Location: http://localhost/vhfrhksfl/index.php');
 
    } else {
      // 중복이 발생 시 처리
      echo "중복날짜발생";
    }
-}
  ?>

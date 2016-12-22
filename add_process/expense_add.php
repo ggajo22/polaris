@@ -1,0 +1,10 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "autoset");
+mysqli_select_db($conn, "polaris2");
+
+  $sql = "INSERT INTO exp (exp_date, exp_key, exp_detail, exp_price, exp_payments, exp_where, exp_requester, exp_comment, exp_created) VALUES('".$_POST['exp_date']."', '".$_POST['exp_key']."', '".$_POST['exp_detail']."', '".$_POST['exp_price']."', '".$_POST['exp_payments']."', '".$_POST['exp_where']."', '".$_POST['exp_requester']."', '".$_POST['exp_comment']."', now())";
+  $result = mysqli_query($conn, $sql);
+
+  // 메인페이지로 돌아가기
+   header('Location: http://localhost/vhfrhksfl/expense.php');
+?>

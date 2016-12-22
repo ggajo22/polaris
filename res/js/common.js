@@ -1,5 +1,3 @@
-getScript('../res/js/mgTable.js');
-getScript('../res/js/mgImg.js');
 function getScript(_url){
 	$.ajax({
 	  url: _url,
@@ -27,7 +25,7 @@ $(function(){
 		if( $(this).is('[data-colorbox-options]') ){
 			options = $.extend(options,eval($(this).attr('data-colorbox-before')));
 		}
-		
+
 		$.colorbox(options);
 	});
 
@@ -80,7 +78,7 @@ function ajaxSubmit(form,after,before){
 		$(form).ajaxSubmit(options);
 	}
 	doSubmit();
-	
+
 	return false;
 };
 //event listener
@@ -146,7 +144,7 @@ function mashSkeleton(skeleton, data, inflateTarget, after, isJson){
 		console.error('Skeleton MissAssignError : '+skeleton);
 	}
 	var cloned = $(skeleton).clone(true);
-	
+
 	cloned.removeClass('hidden skeleton');
 	cloned.find('[class*=has]').removeClass('hastransformer');
 	/* 데이터가 있으면 */
@@ -165,11 +163,11 @@ function mashSkeleton(skeleton, data, inflateTarget, after, isJson){
 	return cloned;
 }
 function inflateSkeleton(datas,obj){ // derived from mashSkeleton
-	
+
 	var _name = $(obj).getName();
 	var val = datas[_name];
 	if(!val) return;// 매칭되는 데이터 없음
-	if(_name.contains('[]')){ 
+	if(_name.contains('[]')){
 		if(typeof val !== 'object') return;
 		//console.log(val);
 		for(var i = 0 ; i < val.length; i++){
@@ -178,13 +176,13 @@ function inflateSkeleton(datas,obj){ // derived from mashSkeleton
 		}
 		return;
 	}
-	
+
 	// pre fix
 	if($(obj).is('[data-inflate-prefix]')){
 		val = $(obj).attr('data-inflate-prefix')+val;
 		$(obj).removeAttr('data-inflate-prefix');
 	}
-	
+
 	// inflate
 	if($(obj).attr('data-inflate') == 'tooltip'){
 		$(obj).attr('data-original-title',val);
@@ -215,7 +213,7 @@ function inflateSkeleton(datas,obj){ // derived from mashSkeleton
 				break;
 			}
 		}
-		
+
 	}else{
 		var tag = $(obj).tagName();
 		switch(tag){
@@ -228,7 +226,7 @@ function inflateSkeleton(datas,obj){ // derived from mashSkeleton
 			if($(obj).is('[data-href-inflate=append]')){
 				var originVal = $(obj).attr('href');
 				var postfix = '';
-				
+
 				if($(obj).is('[data-postfix]')){
 					postfix = $(obj).attr('data-postfix');
 				}
@@ -313,12 +311,12 @@ function delay(afterDelay,time,dontClear){
 /* arr join(String) */
 function stringJoin(arr1,arr2,separator){
 	var arr = new Array();
-	separator = separator || ' '; 
+	separator = separator || ' ';
 	if( arr2.length == 0){
 		return arr1;
 	}
 	for(var i = 0; i < arr1.length; i++){
-		
+
 		for (var j = 0; j < arr2.length ; j++ ){
 			arr.push(arr1[i]+separator+arr2[j]);
 		}
@@ -332,7 +330,7 @@ function reloadArea(options){
 		return;
 	}
 	options.href = options.href || location.href;
-	
+
 	if(Contains(options.href,'#')){
 		console.log('reloadArea : options.href contains "#" auto cutting text on right');
 		console.log('reloadArea : '+options.href);
@@ -368,7 +366,7 @@ function assignClick(selector){
 		}
 	});
 }
-function assignChange(selector){	
+function assignChange(selector){
 	cdebug('['+arguments.callee.name+':'+$(selector).selector+']');
 	$(selector).filter('[data-change]:not(.change-assigned):not(.skeleton)').each(function(i,obj){
 		var _funcName =$(obj).attr('data-change');
@@ -391,7 +389,7 @@ function assignHover(selector){
 			var splitab = _funcName.split(',');
 			$(obj).css('cursor','pointer');
 			var selector = $(obj).attr('data-selector');
-			
+
 			if (selector){
 				$(obj).find(selector).hover(eval(splitab[0]),eval(splitab[1]));
 			}else
@@ -418,11 +416,11 @@ function choiceList(){
 	var seperator = $myParent.attr('data-seperator') || ',';
 	var $list = $target.val().split(seperator);
 	var contain = false;
-	
+
 	for(var i = $list.length-1; i >= 0 ; i--){
 		$list[i] =	$list[i].trim();
 		if (!$list[i].length || $list[i] == $(this).text()){
-			
+
 			if ($list[i] == $(this).text()){
 				contain = true;
 			}
@@ -509,7 +507,7 @@ function getArrayData(objectTarget,append){
 				console.log('duplicate objName = '+objName);
 			}
 		}
-		
+
 	});
 	/* checking object is empty */
 	var isEmpty = true;
@@ -568,14 +566,14 @@ function bootAlert(title,message,type,ondismiss,duration){
 	}
 	if (!title)		{if (type){	title = type;} else title = '';}
 	if (!message || typeof message == 'number')	{message = '';}
-	
+
 	if (!type)		{type = 'warning';}
-	
+
 	if (ondismiss && typeof ondismiss != 'function' && typeof ondismiss == 'number'){
 		duration = ondismiss;
 	}
 	if (!duration){	duration = 2000;}
-	
+
 
 	var $newAlert = document.createElement("div");
 	//$newAlert.classList.add('hidden');
@@ -599,7 +597,7 @@ function bootAlert(title,message,type,ondismiss,duration){
 	$('input').focus(bye);
 	$($newAlert).css('margin-left','-'+parseInt($($newAlert).css('width'))/2+'px');
 	$($newAlert).css('margin-top','-'+parseInt($($newAlert).css('height'))/2+'px');
-	
+
 	$($newAlert).delay(duration).fadeOut(500,function(){
 		$($newAlert).remove();
 		if (ondismiss && typeof ondismiss == 'function'){ondismiss(); ondismiss = null;}
@@ -612,7 +610,7 @@ function bootAlert(title,message,type,ondismiss,duration){
 		});
 	}
 	return false;
-	
+
 }
 function bootConfirm($message,$onConfirm,options){
 	var defaults = {
@@ -669,7 +667,7 @@ function bootConfirm($message,$onConfirm,options){
 		.css('-o-transform','translatex(-50%)')
 		.css('transform','translatex(-50%)');
 	$($newConfirm).css('margin-top','-'+parseInt($($newConfirm).css('height'))/2+'px');
-	
+
 	$($newConfirm).on('closed.bs.alert',options.onClosed);
 	$($newConfirm).on('close.bs.alert',options.onClose);
 	$($newConfirm).animate({top:'+='+window.scrollY},0);
@@ -790,12 +788,12 @@ function JSONFilter(arr,filter,options){
 	filter = Array.isArray(filter)? filter : filter.split(',');
 
 	var newArray = new Array();
-	
+
 	if(options.fitting && options.key){ // 정확히 일치
 		for(var k in arr){
 			var correct = true;
 			for(var i = 0; i < options.key.length; i++){
-				if(!inObject(arr[k],options.key[i],filter)){ 
+				if(!inObject(arr[k],options.key[i],filter)){
 					correct = false;
 					break;
 				}
@@ -837,7 +835,7 @@ function JSONFilter(arr,filter,options){
 							filterPlus[j] = filterPlus[j].replace('~','');
 						}
 						filterPlus[j] = filterPlus[j].trim();
-						
+
 						if(filterPlus[j].contains('=')){
 							//정확히 일치
 							try{
@@ -862,7 +860,7 @@ function JSONFilter(arr,filter,options){
 			isinOr = isinAnd;
 			if(isinOr)
 				newArray.push(arr[key]);
-		
+
 		}
 	}
 	return newArray;
@@ -873,7 +871,7 @@ function cdebug(msg){
 		console.debug(msg);
 }
 
-(function(jQuery){ 
+(function(jQuery){
 /* text() to arr */
 	jQuery.fn.getTextArr = function (){
 		return $(this).map(function(){
@@ -897,9 +895,9 @@ function cdebug(msg){
 		options = $.extend(defaults,options);
 		return this.each(function(idx,obj){
 			var $target = $(obj).attr('data-dch-target') ? $($(obj).attr('data-dch-target')) : $(obj).find('input');
-			
+
 			if(!$target.length) return console.error('Need attribute [data-dch-target]');
-			
+
 			$(obj).addClass('relative help-handler');
 			var $helperObj = options.helperObj.clone(true);
 			var $helperPrev = options.helperPrev.clone(true);
@@ -916,7 +914,7 @@ function cdebug(msg){
 				$helperPrev.addClass('pull-left').add($helperNext.addClass('pull-right')).addClass('fill-height');
 				$helperObj.append($helperPrev).append($helperNext);
 				$(obj).append($helperObj);
-				
+
 			}else{
 				$helperPrev.add($helperNext).addClass('input-group-addon');
 				$(obj).prepend($helperPrev).append($helperNext);
@@ -946,7 +944,7 @@ function cdebug(msg){
 		this.click(function(){
 			if(getSelectionText().length == 0)
 				$(this).select();
-		});	
+		});
 	};
 	jQuery.fn.autoDateForm = function(){
 		return this.each(function(){
@@ -954,7 +952,7 @@ function cdebug(msg){
 			$(this).keypress(insertValue);
 			$(this).keydown(autoForm);
 			$(this).keyup(function(e){
-				
+
 				if(this.value == '0000/00/00' || !parseInt(this.value)){
 					this.value = '';
 				}
@@ -976,31 +974,31 @@ function cdebug(msg){
 			}
 			var split = this.value.split("");
 			split.splice(this.cursorPosition,1);
-			
+
 			this.value = split.join("");
 			$(this).setCursorPosition(this.cursorPosition);
 		}
 		function autoForm(e){
-			
+
 			if(e.keyCode == 8){
 				// back space
 				this.cursorPosition = $(this).getCursorPosition();
-				
+
 				if(this.cursorPosition ==5 || this.cursorPosition == 8){
 					this.cursorPosition--;
 				}
 				if(this.cursorPosition > 0){
 					var split = this.value.split("");
 					split.splice(this.cursorPosition,0,'0');
-					
+
 					this.value = split.join("");
 				}
 				$(this).setCursorPosition(this.cursorPosition);
-			
+
 			}else if(e.keyCode == 46){
 				// delete
 				this.cursorPosition = $(this).getCursorPosition();
-				
+
 				if(this.cursorPosition == 4 || this.cursorPosition == 7){
 					this.cursorPosition++;
 				}
@@ -1014,7 +1012,7 @@ function cdebug(msg){
 				this.cursorPosition++;
 				$(this).setCursorPosition(this.cursorPosition);
 			}
-			
+
 		}
 	};
 	$.fn.getCursorPosition = function(){
@@ -1026,7 +1024,7 @@ function cdebug(msg){
             el.focus();
             var Sel = document.selection.createRange();
             var SelLength = document.selection.createRange().text.length;
-			
+
             Sel.moveStart('character', -el.value.length);
             pos = Sel.text.length - SelLength;
         }
@@ -1054,8 +1052,8 @@ function cdebug(msg){
 				//console.log('length = '+length);
 			}
 			$(obj).css('whiteSpace','nowrap');
-			
-			
+
+
 			postFix = postFix || '';
 			var $text = $(obj).text();
 			var origin_text = $text;
@@ -1071,7 +1069,7 @@ function cdebug(msg){
 				after(obj,origin_text);
 			}
 		});
-		
+
 	};
 	jQuery.fn.fitHeight = function(options){
 		return this.each(function(idx,obj){
@@ -1083,7 +1081,7 @@ function cdebug(msg){
 			var $this = $(obj);
 			fitHeightInner();
 			if(options.trigger){	return;}
-			
+
 			$(window).resize(fitHeightInner);
 			function fitHeightInner(){
 				if ( options.domobile ||($(window).width() > 768 && $this.offset())){
@@ -1092,7 +1090,7 @@ function cdebug(msg){
 				}
 			};
 		});
-		
+
 
 	}
 	jQuery.fn.tagName = function(){
@@ -1110,20 +1108,20 @@ function cdebug(msg){
 		this.blur(function(){
 			if (this.value == ''){
 				this.value = 0;
-			}	
+			}
 			this.value = wonToMoney(this.value);
 			this.value = addComma(this.value);
 		});
 		this.focus(function(){
 			if (this.value == ''){
 				this.value = 0;
-			}	
+			}
 			this.value = wonToMoney(this.value);
 		});
 		return this.each(function(idx,obj){
 			var objStyle= $(obj).tagName();
 			if( objStyle == 'SPAN'){
-				this.value = $(obj).text();	
+				this.value = $(obj).text();
 			}
 			if (this.value == ''){
 				this.value = 0;
@@ -1134,20 +1132,20 @@ function cdebug(msg){
 			this.value = wonToMoney(this.value);
 			this.value = addComma(this.value);
 			if( objStyle == 'SPAN' ){
-				$(obj).text(this.value);	
+				$(obj).text(this.value);
 			}
 			return this.value;
-			
+
 		})
 
 	};
-	
+
 	jQuery.fn.rowMoney = function(){
 		return this.each(function(){
-				
+
 			$(this).val(wonToMoney($(this).val()));
 			return $(this).val();
-			
+
 		});
 	};
 	/* input transFormer!! */
@@ -1173,7 +1171,7 @@ function cdebug(msg){
 			}
 		});
 		function inputTransFormer(){
-			
+
 			if(options.isTransForming == true){
 				return;
 			}
@@ -1188,7 +1186,7 @@ function cdebug(msg){
 				options.returnRedirect = null;
 			}else
 				var isTextarea = false;
-			
+
 			var target = origin.children().filter(':not(.input-label)');
 			if($(this).is('[data-transform-target]')){
 				target = $(this).find($(this).attr('data-transform-target'));
@@ -1198,12 +1196,12 @@ function cdebug(msg){
 
 			// transformed setting
 			//$(transformed).css('position','absolute');
-			
+
 
 			$(transformed).attr('type',options.type);
 			$(transformed).addClass('transform-input');
-			
-			
+
+
 			$(transformed).css('height',20);
 			if(!isTextarea){
 				$(transformed).css('marginTop',-2).css('marginLeft',-2);
@@ -1223,7 +1221,7 @@ function cdebug(msg){
 			}
 			$(transformed).keydown(function(e){
 				//console.log(e.keyCode);
-				
+
 				if (e.keyCode == 13){
 					if (!!isTextarea) return true;
 					returnForm(options.returnRedirect);
@@ -1237,7 +1235,7 @@ function cdebug(msg){
 			if(options.keyPress)
 				$(transformed).keypress(eval(options.keyPress));
 			origin.originValue = target.html().trim();
-			
+
 			//붙이기
 			$(transformed).appendTo(this);
 			origin.css('width',originWidth-1);
@@ -1248,7 +1246,7 @@ function cdebug(msg){
 				$(transformed).val(origin.originValue);
 				$(transformed).select();
 			}
-			
+
 			$(transformed).focus();
 			$(transformed).click(function(e){
 				e.preventDefault();
@@ -1308,7 +1306,7 @@ function cdebug(msg){
 		}
 	};
 	/* toggle table row */
-	
+
 	jQuery.fn.multipleToggle = function(options){
 		var defaults = {
 			activeTarget : 'tr',
@@ -1318,7 +1316,7 @@ function cdebug(msg){
 		options = $.extend(defaults,options);
 		var clicking = false;
 		return this.each(function(){
-			
+
 			var $handler = $(this);
 			$handler.css('cursor','pointer');
 			//handler.click(toggle);
@@ -1329,7 +1327,7 @@ function cdebug(msg){
 			$handler.mouseenter(toggle);
 			$('body').mouseup(out);
 			$('body').mouseleave(out);
-			
+
 			function toggle(e){
 				var $activeTarget = $(e.currentTarget).is(options.activeTarget)?$(e.currentTarget):$(options.activeTarget).has(e.currentTarget);
 				if(clicking == true){
@@ -1358,7 +1356,7 @@ function cdebug(msg){
 *
 *	@licence						MIT License - http://www.opensource.org/licenses/mit-license.php
 */
-	jQuery.fn.extend({  
+	jQuery.fn.extend({
 		elastic: function() {
 			//	We will create a div clone of the textarea
 			//	by copying these attributes from the textarea to the div.
@@ -1385,7 +1383,7 @@ function cdebug(msg){
 				'borderLeftStyle',
 				'borderLeftColor'
 				];
-			
+
 			return this.each( function() {
 				if(this.isElastic) return;
 				this.isElastic = true;
@@ -1393,68 +1391,68 @@ function cdebug(msg){
 				if ( this.type !== 'textarea' ) {
 					return false;
 				}
-					
+
 			var $textarea	= jQuery(this),
 				$twin		= jQuery('<div />').css({'position': 'absolute','display':'none','word-wrap':'break-word'}),
 				lineHeight	= parseInt($textarea.css('line-height'),10) || parseInt($textarea.css('font-size'),'10'),
 				minheight	= parseInt($textarea.css('height'),10) || lineHeight*3,
 				maxheight	= parseInt($textarea.css('max-height'),10) || Number.MAX_VALUE,
 				goalheight	= 0;
-				
+
 				// Opera returns max-height of -1 if not set
 				if (maxheight < 0) { maxheight = Number.MAX_VALUE; }
-					
+
 				// Append the twin to the DOM
 				// We are going to meassure the height of this, not the textarea.
 				$twin.appendTo($textarea.parent());
-				
+
 				// Copy the essential styles (mimics) from the textarea to the twin
 				var i = mimics.length;
 				while(i--){
 					$twin.css(mimics[i].toString(),$textarea.css(mimics[i].toString()));
 				}
-				
+
 				// Updates the width of the twin. (solution for textareas with widths in percent)
 				function setTwinWidth(){
 					curatedWidth = Math.floor(parseInt($textarea.width(),10));
 					if($twin.width() !== curatedWidth){
 						$twin.css({'width': curatedWidth + 'px'});
-						
+
 						// Update height of textarea
 						update(true);
 					}
 				}
-				
+
 				// Sets a given height and overflow state on the textarea
 				function setHeightAndOverflow(height, overflow){
-				
+
 					var curratedHeight = Math.floor(parseInt(height,10));
 					if($textarea.height() !== curratedHeight){
 						$textarea.css({'height': curratedHeight + 'px','overflow':overflow});
-						
+
 						// Fire the custom event resize
 						$textarea.trigger('resize');
-						
+
 					}
 				}
-				
-				// This function will update the height of the textarea if necessary 
+
+				// This function will update the height of the textarea if necessary
 				function update(forced) {
-					
+
 					// Get curated content from the textarea.
 					var textareaContent = $textarea.val().replace(/&/g,'&amp;').replace(/ {2}/g, '&nbsp;').replace(/<|>/g, '&gt;').replace(/\n/g, '<br />');
-					
+
 					// Compare curated content with curated twin.
 					var twinContent = $twin.html().replace(/<br>/ig,'<br />');
-					
+
 					if(forced || textareaContent+'&nbsp;' !== twinContent){
-					
+
 						// Add an extra white space so new rows are added when you are at the end of a row.
 						$twin.html(textareaContent+'&nbsp;');
-						
+
 						// Change textarea height if twin plus the height of one line differs more than 3 pixel from textarea height
 						if(Math.abs($twin.height() + lineHeight - $textarea.height()) > 3){
-							
+
 							var goalheight = $twin.height()+lineHeight;
 							if(goalheight >= maxheight) {
 								setHeightAndOverflow(maxheight,'auto');
@@ -1463,26 +1461,26 @@ function cdebug(msg){
 							} else {
 								setHeightAndOverflow(goalheight,'hidden');
 							}
-							
+
 						}
-						
+
 					}
-					
+
 				}
-				
+
 				// Hide scrollbars
 				$textarea.css({'overflow':'hidden'});
-				
+
 				// Update textarea size on keyup, change, cut and paste
 				$textarea.bind('keyup change cut paste', function(){
-					update(); 
+					update();
 				});
-				
+
 				// Update width of twin if browser or textarea is resized (solution for textareas with widths in percent)
 				$(window).bind('resize', setTwinWidth);
 				$textarea.bind('resize', setTwinWidth);
 				$textarea.bind('update', update);
-				
+
 				// Compact textarea on blur
 				$textarea.bind('blur',function(){
 					if($twin.height() < maxheight){
@@ -1493,15 +1491,15 @@ function cdebug(msg){
 						}
 					}
 				});
-				
+
 				// And this line is to catch the browser paste event
-				$textarea.bind('input paste',function(e){ setTimeout( update, 250); });				
-				
+				$textarea.bind('input paste',function(e){ setTimeout( update, 250); });
+
 				// Run update once when elastic is initialized
 				update();
-				
+
 			});
-			
-        } 
-    }); 
+
+        }
+    });
 })(jQuery);
