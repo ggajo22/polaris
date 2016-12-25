@@ -15,7 +15,10 @@
 
 <!-- 입력창-->
 <div class="container">
-  <form id="inputLayer" class="hidden row inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px; top:250px;" onsubmit="return check_input()">
+  <form id="inputLayer" class="hidden inputLayer" action="add_process/expense_add.php" method="post" style="position:absolute; width:1000px; top:250px;" onsubmit="return check_input()">
+    <div class="hidden">
+      <input type="text" name="exp_id" id="input_exp_id">
+    </div>
     <div class="form-group col-xs-4">
       <label for="exp_date">결제일(필수)</label>
       <input type="text" class="form-control datepicker" name="exp_date" id="input_exp_date">
@@ -30,8 +33,6 @@
           }
         ?>
       </select>
-
-
     </div>
     <div class="form-group col-xs-4">
       <label for="exp_detail">상세분류(필수)</label>
@@ -73,7 +74,8 @@
     </div>
     <div class="col-xs-offset-5">
       <input type="submit" class="btn btn-success btn-lg" value="저장" id="submit_btn">
-      <input type="button" class="btn btn-danger btn-lg" value="닫기" id="close_btn">
+      <input type="button" class="btn btn-warning btn-lg" value="닫기" id="close_btn">
+      <input type="submit" class="btn btn-danger btn-lg hidden" value="삭제" id="delete_btn">
     </div>
   </form>
 </div>
@@ -105,7 +107,7 @@
 <div class="hidden">
   <table>
     <tbody>
-      <tr class="skeleton" name="id" data-inflate="data-exp-id">
+      <tr class="skeleton" name="exp_id" data-inflate="data-exp-id" onclick="showInputLayer(this);">
         <td><span name="id"></span></td>
         <td><span name="exp_date"></span></td>
         <td><span name="exp_key"></span></td>
@@ -169,7 +171,6 @@
             _expData.push(expData[i]);
           }
         }
-        console.log(_expData);
 
       var skeleton = $(".skeleton");
       for(i=0; i<_expData.length; i++){
@@ -234,5 +235,33 @@
       $("#input_exp_payments").focus();
       return false;
     } return true;
+  }
+
+  // 삭제 버튼 시 expense_delete.php 로 이동
+  $("#delete_btn").click(function(){
+    $("#inputLayer").attr('action', 'add_process/expense_delete.php');
+  })
+
+    var exp_data = <?=json_encode($exp_data);?>;
+  function showInputLayer(tr){
+    var id = $(tr).attr('data-exp-id');
+    $("#inputLayer").removeClass("hidden");
+
+    // 정보 뿌려주기
+    if(id){
+      var _exp_data = exp_data[id];
+      $("#delete_btn").removeClass("hidden");
+      $("#submit_btn").val("수정");
+      $("#inputLayer").attr('action', 'add_process/expense_modify.php');
+
+      for(var _attrName in _exp_data){
+        var _value = _exp_data[_attrName];
+
+        if($('#input_'+_attrName).length > 0){
+          $('#input_'+_attrName).val(_exp_data[_attrName]);
+        }
+      }
+    }
+
   }
 </script>

@@ -66,4 +66,12 @@
          $resData[$row['res_info_id']]['payment'][] = $row;
       }
     }
+
+    // 미결제자 파악하기
+    $sql = "SELECT pm.res_info_id, paid_price, total_price FROM payment pm LEFT JOIN res_info ri ON pm.res_info_id = ri.res_info_id";
+    $result = mysqli_query($conn, $sql);
+    $compData = array();
+    while($row = mysqli_fetch_assoc($result)){
+      $compData[] = $row;
+    }
 ?>

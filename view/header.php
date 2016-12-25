@@ -51,6 +51,9 @@
       #right-btn{
         float: right;
       }
+      .uncomplete{
+        background-color : #ff0000 !important;
+      }
     </style>
   </head>
   <body>

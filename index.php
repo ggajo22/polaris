@@ -131,6 +131,7 @@
 <script type="text/javascript">
   var today = new Date();
   makeTable();
+  uncomplete();
 
   // 기준일 설정
   $('#btnDateSelect').click(function(){
@@ -139,6 +140,7 @@
     $('#dustmq tbody').empty();
     $('#dustmq tfoot').empty();
     makeTable();
+    uncomplete();
   });
 
 // 테이블 만들기
@@ -263,7 +265,7 @@ function showInputLayer(cell){
       if($('#input_'+_attrName).length > 0){
          $('#input_'+_attrName).val(_resDat[_attrName]);
        }
-      }
+     }
     console.log($("#input_res_info_id").val());
 
     if(_resDat['payment']){
@@ -367,6 +369,19 @@ function check_input(){
     return false;
   }
 }
+
+// 미결제 uncomplte 클래스 추가
+function uncomplete(){
+  var compData = <?=json_encode($compData);?>;
+  for(i=0; i<compData.length; i++){
+    if(compData[i]['paid_price'] < compData[i]['total_price']){
+      $("[data-resi-id='"+compData[i]['res_info_id']+"']").addClass('uncomplete');
+      console.log(compData[i]);
+    }
+  }
+}
+
+
 
 </script>
  </body>

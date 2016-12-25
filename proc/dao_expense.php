@@ -30,4 +30,12 @@
   while($row = mysqli_fetch_assoc($result)){
     $paymData[] = $row;
   }
+
+// 입력값 가져올 데이터 가져오기
+  $sql = "SELECT * FROM exp";
+  $result = mysqli_query($conn, $sql);
+  $exp_data = array();
+  while($row = mysqli_fetch_assoc($result)){
+    $exp_data[$row['exp_id']] = $row;
+  }
  ?>
