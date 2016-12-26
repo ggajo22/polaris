@@ -109,6 +109,7 @@
         $.post('proc/dao_payment_report.php', function(pmData){
           $("table tbody").empty();
           $("#summary tbody").empty();
+          $(".panel-body").addClass("hidden");
           var pmData = <?=json_encode($pmData);?>;
           var dsData = <?=json_encode($dsData);?>;
           var pfs = <?=json_encode($platforms);?>;
