@@ -290,8 +290,12 @@ function showInputLayer(cell){
         });
         var __min_date_of_stay = _resDat['res'][_resDat['res'].length-1].date_of_stay;
         var __max_date_of_stay = _resDat['res'][0].date_of_stay;
+        var __max_date_of_stay2 = new Date(__max_date_of_stay);
+        __max_date_of_stay2.setDate(__max_date_of_stay2.getDate()+1);
+        var __max_date_of_stay3 = getFormatDate2(__max_date_of_stay2);
+        console.log(__max_date_of_stay3);
         $("#input_start_date").val(__min_date_of_stay);
-        $("#input_end_date").val(__max_date_of_stay);
+        $("#input_end_date").val(__max_date_of_stay3);
      }
   } else {
     // 원상복귀

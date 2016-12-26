@@ -5,6 +5,8 @@
   $start_date = $_POST['start_date'];
   $end_date = $_POST['end_date'];
   $res_info_id = $_POST['res_info_id'];
+  // $end_date 하루 전날까지 저장
+  $end_date = date("Y-m-d", strtotime("-1 day", strtotime($end_date)));
 
   // 룸아이디, 숙박일자가 중복되어 있는지 확인
   $sql =  "SELECT * FROM res r LEFT JOIN res_info ri ON r.res_info_id = ri.res_info_id WHERE ri.res_info_id != '".$res_info_id."' AND room_id='".$_POST['room_id']."' AND date_of_stay BETWEEN '".$start_date."' AND '".$end_date."'";
