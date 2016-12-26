@@ -5,6 +5,6 @@
   $sql = "DELETE FROM res_info WHERE res_info_id='".$_POST['res_info_id']."'";
   $result = mysqli_query($conn, $sql);
 
-  header('Location: http://localhost/vhfrhksfl/index.php');
+  require("../config/db_redirect.php");
 
 ?>

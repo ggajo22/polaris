@@ -47,7 +47,7 @@ mysqli_select_db($conn, "polaris2");
      $result3 = mysqli_query($conn, $sql3);
 
     // 메인페이지로 돌아가기
-     header('Location: http://localhost/vhfrhksfl/index.php');
+     require("../config/db_redirect.php");
 
    } else {
      // 중복이 발생 시 처리

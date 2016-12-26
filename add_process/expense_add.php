@@ -6,5 +6,5 @@ mysqli_select_db($conn, "polaris2");
   $result = mysqli_query($conn, $sql);
 
   // 메인페이지로 돌아가기
-   header('Location: http://localhost/vhfrhksfl/expense.php');
+   require("../config/db_redirect.php");
 ?>
