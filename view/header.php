@@ -54,6 +54,9 @@
       .uncomplete{
         background-color : #ff0000 !important;
       }
+      ul li{
+        list-style : none;
+      }
     </style>
   </head>
   <body>
@@ -65,6 +68,7 @@
             <li role="presentation"><a href ="/vhfrhksfl"> 예약현황 </a></li>
             <li role="presentation"><a href ="/vhfrhksfl/expense.php"> 지출 현황 </a></li>
             <li role="presentation"><a href ="/vhfrhksfl/payment_report.php"> 결제일별 집계 </a></li>
+            <li role="presentation"><a href ="/vhfrhksfl/platform_report.php"> 플랫폼별 집계 </a></li>
             <li role="presentation"><a href ="/vhfrhksfl/date_report.php"> 일별 집계 </a></li>
             <!--<li role="presentation"><a href ="/index.php/res/room"> 방정보 </a></li>-->
           </ul>
