@@ -175,7 +175,7 @@ function makeTable(){
   // 달력에 데이터 뿌리기
   var res_data = <?=json_encode($res_data)?>;
   for(i=0; i<res_data.length; i++){
-    $("#"+res_data[i]['room_no']+"_"+res_data[i]['date_of_stay']).append('<div style="width:100%;height:100%;overflow:auto;">'+res_data[i]['guest_name']+'</div>').css("background-color", res_data[i]['color']).attr('data-resi-id',res_data[i]['res_info_id']);
+    $("#"+res_data[i]['room_no']+"_"+res_data[i]['date_of_stay']).append('<div style="width:100%;height:100%;overflow-x:hidden;">'+res_data[i]['guest_name']+'</div>').css("background-color", res_data[i]['color']).attr('data-resi-id',res_data[i]['res_info_id']);
   }
 
   // 하단 점유율 뿌리기
