@@ -65,11 +65,12 @@
       <div class="navbar-default">
         <div class="container-fluid">
           <ul class="nav nav-pills">
-            <li role="presentation"><a href ="/vhfrhksfl"> 예약현황 </a></li>
-            <li role="presentation"><a href ="/vhfrhksfl/expense.php"> 지출 현황 </a></li>
-            <li role="presentation"><a href ="/vhfrhksfl/payment_report.php"> 결제일별 집계 </a></li>
-            <li role="presentation"><a href ="/vhfrhksfl/platform_report.php"> 플랫폼별 집계 </a></li>
-            <li role="presentation"><a href ="/vhfrhksfl/date_report.php"> 일별 집계 </a></li>
+            <li role="presentation"><a href ="index.php"> 예약현황 </a></li>
+            <li role="presentation"><a href ="expense.php"> 지출 현황 </a></li>
+            <li role="presentation"><a href ="payment_report.php"> 결제일별 집계 </a></li>
+            <li role="presentation"><a href ="platform_report.php"> 플랫폼별 집계 </a></li>
+            <li role="presentation"><a href ="date_report.php"> 일별 집계 </a></li>
+            <li role="presentation"><a href ="hyosik.php"> 효식 집계 </a></li>
             <!--<li role="presentation"><a href ="/index.php/res/room"> 방정보 </a></li>-->
           </ul>
         </div>
