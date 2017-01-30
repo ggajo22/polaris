@@ -5,6 +5,6 @@
   $sql = "DELETE FROM exp WHERE exp_id='".$_POST['exp_id']."'";
   $result = mysqli_query($conn, $sql);
 
-  require("../config/db_redirect.php");
+  header('Location: ../expense.php');
 
 ?>

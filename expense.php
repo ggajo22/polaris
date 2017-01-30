@@ -90,15 +90,15 @@
 <div class='padding30'>
   <table id="exp_report" class="table table-hover text-center">
     <thead>
-      <th>결제번호</th>
-      <th>결제일</th>
-      <th>대분류</th>
-      <th>상세분류</th>
-      <th>구매처</th>
-      <th>구매(요청)자</th>
-      <th>내용</th>
-      <th>지출금액</th>
-      <th>결제방법</th>
+      <th width="7%">결제번호</th>
+      <th width="7%">결제일</th>
+      <th width="7%">대분류</th>
+      <th width="7%">상세분류</th>
+      <th width="15%">구매처</th>
+      <th width="7%">구매(요청)자</th>
+      <th width="30%">내용</th>
+      <th width="10%">지출금액</th>
+      <th width="10%">결제방법</th>
     </thead>
     <tbody></tbody>
     <tfoot></tfoot>
@@ -108,7 +108,7 @@
   <table>
     <tbody>
       <tr class="skeleton" name="exp_id" data-inflate="data-exp-id" onclick="showInputLayer(this);">
-        <td><span name="id"></span></td>
+        <td><span name="exp_id"></span></td>
         <td><span name="exp_date"></span></td>
         <td><span name="exp_key"></span></td>
         <td><span name="exp_detail"></span></td>
@@ -148,37 +148,39 @@
 
 
   $("#select_date_btn").click(function(){
-    $.post("proc/dao_expense.php", function(expData){
-      $("#exp_report tbody").empty();
-      $("#summary tbody").empty();
-      var expData = <?=json_encode($expData);?>;
-      var start = new Date($('[name=PAYM_START_DATE]').val());
-      var end = new Date($('[name=PAYM_END_DATE]').val());
-      // 총합 구하기
-        var sum = 0;
-        for(i=0; i<expData.length; i++){
-          if(new Date(expData[i]['exp_date']) >= start && new Date(expData[i]['exp_date']) <= end){
-            var number = parseInt(expData[i]['exp_price']);
-            sum += number;
-          }
-        }
-        $("#summary tbody").append('<tr><td>'+number_format(sum)+'</td></tr>');
-      // 데이터 뿌리기
-      var _expData = [];
-      for(i=0; i<expData.length; i++){
-        if(new Date(expData[i]['exp_date']) >= start && new Date(expData[i]['exp_date']) <= end){
-            expData[i]['exp_price'] = number_format(expData[i]['exp_price']);
-            _expData.push(expData[i]);
-          }
-        }
-
-      var skeleton = $(".skeleton");
-      for(i=0; i<_expData.length; i++){
-        var $mashedObj = mashSkeleton(skeleton, _expData[i], true);
-        $('#exp_report').append($mashedObj);
-      }
-    })
+    dataSprinkle();
   })
+
+  function dataSprinkle(){
+    $("#exp_report tbody").empty();
+    $("#summary tbody").empty();
+    var expData = <?=json_encode($expData);?>;
+    var start = new Date($('[name=PAYM_START_DATE]').val());
+    var end = new Date($('[name=PAYM_END_DATE]').val());
+    // 총합 구하기
+    var sum = 0;
+    for(i=0; i<expData.length; i++){
+      if(new Date(expData[i]['exp_date']) >= start && new Date(expData[i]['exp_date']) <= end){
+        var number = parseInt(expData[i]['exp_price']);
+        sum += number;
+      }
+    }
+    $("#summary tbody").append('<tr><td>'+number_format(sum)+'</td></tr>');
+    // 데이터 뿌리기
+    var _expData = [];
+    for(i=0; i<expData.length; i++){
+      if(new Date(expData[i]['exp_date']) >= start && new Date(expData[i]['exp_date']) <= end){
+          expData[i]['exp_price'] = number_format(expData[i]['exp_price']);
+          _expData.push(expData[i]);
+        }
+      }
+
+    var skeleton = $(".skeleton");
+    for(i=0; i<_expData.length; i++){
+      var $mashedObj = mashSkeleton(skeleton, _expData[i], true);
+      $('#exp_report').append($mashedObj);
+    }
+  }
 
   function number_format(data){
    var tmp = '';
